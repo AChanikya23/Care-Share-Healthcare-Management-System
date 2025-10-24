@@ -127,26 +127,20 @@ const Employees = () => {
     setCurrentPage(1);
   };
 
+  // FIXED: Changed API endpoint from /auth/register to /employees
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-      const userResponse = await api.post('/auth/register', {
-        name: formData.name,
+      const response = await api.post('/employees', {
         email: formData.email,
         password: formData.password,
-        role: 'user'
-      });
-
-      const userId = userResponse.data.user.id;
-
-      await api.post('/employees', {
-        user_id: userId,
+        name: formData.name,
         department: formData.department,
         position: formData.position,
         salary: parseFloat(formData.salary),
-        join_date: formData.join_date
+        joinDate: formData.join_date
       });
 
       alert(`✅ Employee Added Successfully!\n\n📧 Login Credentials:\nEmail: ${formData.email}\nPassword: ${formData.password}\n\n⚠️ Please share these credentials with the employee.`);
