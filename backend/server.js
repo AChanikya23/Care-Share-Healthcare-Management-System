@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const employeeRoutes = require('./routes/employeeRoutes');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ const employeeRoutes = require('./routes/employeeRoutes');  // Add this
 
 app.use('/api/auth', authRoutes);
 app.use('/api/employees', employeeRoutes);  // Add this
+app.use('/api/employees', employeeRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
