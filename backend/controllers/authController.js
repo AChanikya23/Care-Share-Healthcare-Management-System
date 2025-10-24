@@ -55,12 +55,11 @@ const login = async (req, res) => {
   }
 };
 
-// REGISTER
+// REGISTER - Add this after the login function
 const register = async (req, res) => {
   try {
     const { name, email, password, role = 'employee' } = req.body;
 
-    // Check if user already exists
     const { data: existing } = await supabase
       .from('users')
       .select('id')
@@ -71,24 +70,16 @@ const register = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const { data: user, error } = await supabase
       .from('users')
-      .insert([{
-        name,
-        email,
-        password: hashedPassword,
-        role
-      }])
+      .insert([{ name, email, password: hashedPassword, role }])
       .select()
       .single();
 
     if (error) throw error;
 
-    // Generate token
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
@@ -97,12 +88,7 @@ const register = async (req, res) => {
 
     res.status(201).json({
       token,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role
-      }
+      user: { id: user.id, email: user.email, name: user.name, role: user.role }
     });
   } catch (error) {
     console.error('Register error:', error);
@@ -110,10 +96,9 @@ const register = async (req, res) => {
   }
 };
 
-// GET CURRENT USER (ME)
+// GET CURRENT USER
 const me = async (req, res) => {
   try {
-    // req.user is set by auth middleware
     const { data: user, error } = await supabase
       .from('users')
       .select('id, name, email, role')
@@ -130,5 +115,8 @@ const me = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-module.exports = { login, register, me };
+module.exports = {
+  login,
+  register,
+  me
+};
