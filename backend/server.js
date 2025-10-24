@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const employeeRoutes = require('./routes/employeeRoutes');  // Keep this line (Line 4)
+const employeeRoutes = require('./routes/employeeRoutes');
 
 dotenv.config();
 
