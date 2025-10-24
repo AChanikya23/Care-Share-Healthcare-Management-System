@@ -2,11 +2,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const supabase = require('../config/supabase');
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Query employees table instead of users
     const { data: user, error } = await supabase
       .from('employees')
       .select('*')
@@ -17,14 +16,12 @@ exports.login = async (req, res) => {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Compare password
     const isValidPassword = await bcrypt.compare(password, user.password);
     
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    // Generate JWT token
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
@@ -45,3 +42,5 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+module.exports = { login };
