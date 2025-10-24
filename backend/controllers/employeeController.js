@@ -6,10 +6,9 @@ exports.getAllEmployees = async (req, res) => {
     const { data: employees, error } = await supabase
       .from('employees')
       .select('*')
-      .eq('role', 'employee'); // Only get employees, not admins
+      .eq('role', 'employee');
 
     if (error) throw error;
-
     res.json(employees);
   } catch (error) {
     console.error('Get employees error:', error);
@@ -22,23 +21,21 @@ exports.createEmployee = async (req, res) => {
   try {
     const { email, password, name, department, position, salary, joinDate } = req.body;
 
-    console.log('Creating employee:', { email, name, department, position });
+    console.log('=== CREATE EMPLOYEE ===');
+    console.log('Data:', { email, name, department, position, salary, joinDate });
 
-    // Insert employee (using plain text password for now since we're in testing mode)
     const { data: employee, error } = await supabase
       .from('employees')
-      .insert([
-        {
-          email,
-          password, // Plain text password (temporary)
-          name,
-          role: 'employee',
-          department,
-          position,
-          salary,
-          join_date: joinDate
-        }
-      ])
+      .insert([{
+        email,
+        password,
+        name,
+        role: 'employee',
+        department,
+        position,
+        salary: parseFloat(salary),
+        join_date: joinDate
+      }])
       .select()
       .single();
 
@@ -47,7 +44,7 @@ exports.createEmployee = async (req, res) => {
       throw error;
     }
 
-    console.log('Employee created successfully:', employee.email);
+    console.log('Employee created:', employee.email);
     res.status(201).json({ message: 'Employee created successfully', employee });
   } catch (error) {
     console.error('Create employee error:', error);
@@ -69,7 +66,6 @@ exports.updateEmployee = async (req, res) => {
       .single();
 
     if (error) throw error;
-
     res.json({ message: 'Employee updated successfully', employee });
   } catch (error) {
     console.error('Update employee error:', error);
@@ -88,7 +84,6 @@ exports.deleteEmployee = async (req, res) => {
       .eq('id', id);
 
     if (error) throw error;
-
     res.json({ message: 'Employee deleted successfully' });
   } catch (error) {
     console.error('Delete employee error:', error);

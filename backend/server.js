@@ -18,10 +18,10 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
-const employeeRoutes = require('./routes/employeeRoutes');
+const employeeRoutes = require('./routes/employeeRoutes');  // Add this
 
 app.use('/api/auth', authRoutes);
-app.use('/api/employees', employeeRoutes);  // Add this line
+app.use('/api/employees', employeeRoutes);  // Add this
 
 // Health check
 app.get('/api/health', (req, res) => {
