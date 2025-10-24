@@ -1,63 +1,67 @@
-const { supabase } = require('../config/supabase');
+const supabase = require('../config/supabase');
 
 // Get all employees
-const getAllEmployees = async (req, res) => {
+exports.getAllEmployees = async (req, res) => {
   try {
-    const { data, error } = await supabase
+    const { data: employees, error } = await supabase
       .from('employees')
-      .select('*, users(name, email)')
-      .order('created_at', { ascending: false });
+      .select('*')
+      .eq('role', 'employee'); // Only get employees, not admins
 
     if (error) throw error;
-    res.json({ employees: data });
+
+    res.json(employees);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Get employees error:', error);
+    res.status(500).json({ error: 'Failed to fetch employees' });
   }
 };
 
-// Get employee by ID
-const getEmployeeById = async (req, res) => {
+// Create new employee
+exports.createEmployee = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { email, password, name, department, position, salary, joinDate } = req.body;
 
-    const { data, error } = await supabase
+    console.log('Creating employee:', { email, name, department, position });
+
+    // Insert employee (using plain text password for now since we're in testing mode)
+    const { data: employee, error } = await supabase
       .from('employees')
-      .select('*, users(name, email)')
-      .eq('id', id)
-      .single();
-
-    if (error) throw error;
-    res.json({ employee: data });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Create employee
-const createEmployee = async (req, res) => {
-  try {
-    const { user_id, department, position, salary, join_date } = req.body;
-
-    const { data, error } = await supabase
-      .from('employees')
-      .insert([{ user_id, department, position, salary, join_date }])
+      .insert([
+        {
+          email,
+          password, // Plain text password (temporary)
+          name,
+          role: 'employee',
+          department,
+          position,
+          salary,
+          join_date: joinDate
+        }
+      ])
       .select()
       .single();
 
-    if (error) throw error;
-    res.status(201).json({ message: 'Employee created', employee: data });
+    if (error) {
+      console.error('Supabase error:', error);
+      throw error;
+    }
+
+    console.log('Employee created successfully:', employee.email);
+    res.status(201).json({ message: 'Employee created successfully', employee });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Create employee error:', error);
+    res.status(500).json({ error: 'Failed to create employee' });
   }
 };
 
 // Update employee
-const updateEmployee = async (req, res) => {
+exports.updateEmployee = async (req, res) => {
   try {
     const { id } = req.params;
     const updates = req.body;
 
-    const { data, error } = await supabase
+    const { data: employee, error } = await supabase
       .from('employees')
       .update(updates)
       .eq('id', id)
@@ -65,14 +69,16 @@ const updateEmployee = async (req, res) => {
       .single();
 
     if (error) throw error;
-    res.json({ message: 'Employee updated', employee: data });
+
+    res.json({ message: 'Employee updated successfully', employee });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error('Update employee error:', error);
+    res.status(500).json({ error: 'Failed to update employee' });
   }
 };
 
 // Delete employee
-const deleteEmployee = async (req, res) => {
+exports.deleteEmployee = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -82,16 +88,10 @@ const deleteEmployee = async (req, res) => {
       .eq('id', id);
 
     if (error) throw error;
-    res.json({ message: 'Employee deleted' });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
 
-module.exports = {
-  getAllEmployees,
-  getEmployeeById,
-  createEmployee,
-  updateEmployee,
-  deleteEmployee
+    res.json({ message: 'Employee deleted successfully' });
+  } catch (error) {
+    console.error('Delete employee error:', error);
+    res.status(500).json({ error: 'Failed to delete employee' });
+  }
 };

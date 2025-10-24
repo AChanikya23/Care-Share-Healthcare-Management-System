@@ -6,9 +6,9 @@ dotenv.config();
 
 const app = express();
 
-// CORS Configuration - ALLOW ALL ORIGINS FOR NOW
+// CORS Configuration
 app.use(cors({
-  origin: '*',  // Allow all origins
+  origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -18,7 +18,10 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
+const employeeRoutes = require('./routes/employeeRoutes');
+
 app.use('/api/auth', authRoutes);
+app.use('/api/employees', employeeRoutes);  // Add this line
 
 // Health check
 app.get('/api/health', (req, res) => {
