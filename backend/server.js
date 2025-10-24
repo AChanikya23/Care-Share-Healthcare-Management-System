@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const employeeRoutes = require('./routes/employeeRoutes');
+const employeeRoutes = require('./routes/employeeRoutes');  // Keep this line (line 4)
 
 dotenv.config();
 
@@ -19,10 +19,8 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
-const employeeRoutes = require('./routes/employeeRoutes');  // Add this
 
 app.use('/api/auth', authRoutes);
-app.use('/api/employees', employeeRoutes);  // Add this
 app.use('/api/employees', employeeRoutes);
 
 // Health check
