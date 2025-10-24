@@ -1,0 +1,23 @@
+.payroll-page {
+  padding: 30px;
+  background: #f5f5f5;
+  min-height: calc(100vh - 60px);
+}
+
+.payroll-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payroll-table th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.payroll-table td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}

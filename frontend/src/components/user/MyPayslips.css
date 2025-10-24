@@ -1,0 +1,27 @@
+.payslips-page {
+  padding: 30px;
+  background: #f5f5f5;
+  min-height: calc(100vh - 60px);
+}
+
+.payslip-card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .payslip-print, .payslip-print * {
+    visibility: visible;
+  }
+  .payslip-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

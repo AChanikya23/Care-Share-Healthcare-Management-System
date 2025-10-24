@@ -1,0 +1,37 @@
+.attendance-page {
+  padding: 30px;
+  background: #f5f5f5;
+  min-height: calc(100vh - 60px);
+}
+
+.work-hours-summary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 30px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+.attendance-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.attendance-table td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}

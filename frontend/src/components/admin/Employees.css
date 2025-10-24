@@ -1,0 +1,67 @@
+.employees-page {
+  padding: 30px;
+  background: #f5f5f5;
+  min-height: calc(100vh - 60px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.btn-add {
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.btn-add:hover {
+  background: #5568d3;
+}
+
+.employees-list {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+.employees-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employees-list th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.employees-list td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+  color: #666;
+}
+
+.loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  color: #666;
+}

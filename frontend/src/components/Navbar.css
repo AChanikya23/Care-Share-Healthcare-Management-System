@@ -1,0 +1,38 @@
+.navbar {
+  background: #1dcaec;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar-brand h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  font-size: 14px;
+}
+
+.btn-logout {
+  padding: 8px 20px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-logout:hover {
+  background: rgba(255,255,255,0.3);
+}
